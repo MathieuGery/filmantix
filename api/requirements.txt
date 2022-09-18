@@ -5,3 +5,4 @@ werkzeug==2.0.3
 waitress
 paste
 confuse
+spacy

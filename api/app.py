@@ -6,6 +6,7 @@ from libs.restplus import api_restplus
 from paste.translogger import TransLogger
 from libs.config import config
 from endpoints.status.status import ns as status
+from endpoints.testModel.testModel import ns as testModel
 
 app = Flask(__name__)
 app.config.from_mapping(config.get())
