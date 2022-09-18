@@ -1,0 +1,11 @@
+Flask
+Flask-PyMongo
+flask-restplus
+Flask-Caching
+flask_apscheduler
+flask_httpauth
+pymongo
+werkzeug==2.0.3
+waitress
+paste
+confuse
