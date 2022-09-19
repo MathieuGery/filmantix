@@ -12,7 +12,7 @@ import spacy
 nlp = spacy.load('fr_core_news_lg')
 # print(Fore.GREEN + 'loaded model')
 
-plot, worldCount = get_plot('0133093') #matrix
+plot, wordCount = get_plot('0133093') #matrix
 
 # print(Fore.GREEN + 'parsing text')
 tokens = nlp(plot)
@@ -34,4 +34,4 @@ class TestModelResources(Resource):
         return {'message': 'Status Ok' , 'similarity': [
                 {str(token): token.similarity(compare) for token in tokens}
             ],
-            'worldCount': worldCount}, 200,
+            'wordCount': wordCount}, 200,
