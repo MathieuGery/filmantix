@@ -2,21 +2,19 @@ from flask_restplus import Resource
 from libs.restplus import api_restplus
 from endpoints.testModel.serializers import model_payload
 from flask import request
-from tmp import get_plot
+from tmp import get_plot, deleteCopy
 # from colorama import Fore, init
 # init(autoreset=True)
 
 import spacy
 
-# print(Fore.GREEN + 'loading model')
 nlp = spacy.load('fr_core_news_lg')
-# print(Fore.GREEN + 'loaded model')
-
-plot, wordCount = get_plot('0133093') #matrix
-
-# print(Fore.GREEN + 'parsing text')
+plot = get_plot('0133093') #matrix
 tokens = nlp(plot)
-# print(Fore.GREEN + 'text parsed')
+wordCount = len(tokens)
+words = deleteCopy(tokens)
+
+print('start')
 
 ns = api_restplus.namespace(
     'testModel', description='Status method')
@@ -31,7 +29,15 @@ class TestModelResources(Resource):
         if not compare.has_vector:
             return {'message': 'no vector'}, 400
 
-        return {'message': 'Status Ok' , 'similarity': [
-                {str(token): token.similarity(compare) for token in tokens}
-            ],
-            'wordCount': wordCount}, 200,
+        return {'message': 'Status Ok',
+                'similarity': [
+                    {
+                        w: {
+                            'value': tokens[words[w][0]].similarity(compare),
+                            'index': words[w]
+                        } for w in words
+                    }
+                ], 
+            'wordCount': wordCount,
+            'word': word
+        }

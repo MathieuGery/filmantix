@@ -1,19 +1,12 @@
-from imdb import Cinemagoer, locale
-# from colorama import Fore, init
-import re
-
-rgx = re.compile('\w+')
+# from imdb import Cinemagoer, locale
 
 # init(autoreset=True)
 
-def get_plot(id: str):
-    ia = Cinemagoer()
+def get_plot(id: str) -> str:
+    # ia = Cinemagoer()
 
     #TODO find HOW TO GET FRENCH 
-    # print(Fore.CYAN + "requesting movie")
     # movie = ia.get_movie(id)
-    # print(Fore.CYAN + "got movie")
-    # # print(movie['plot'])
     # return movie['plot'][0]
 
     text = """
@@ -34,5 +27,16 @@ def get_plot(id: str):
     De retour dans la Matrice, Neo passe un coup de téléphone, promettant aux machines qu'il montrera à leurs prisonniers « un monde où tout est possible ». Il raccroche et s'envole.
     """
     
-    text = rgx.findall(text)
-    return (' '.join(text), len(text))
+    return text
+
+def deleteCopy(tab: list) -> dict:
+    dic = {}
+    for i, word in enumerate(tab):
+        word = str(word)
+        if word in dic:
+            dic[word].append(i)
+        else :
+            dic[word] = [i]
+    return dic
+
+
