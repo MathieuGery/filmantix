@@ -6,3 +6,4 @@ waitress
 paste
 confuse
 spacy
+cinemagoer
