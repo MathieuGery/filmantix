@@ -121,11 +121,10 @@ function MobileNavigation(props) {
             </div>
             <nav className="mt-6">
               <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-                <MobileNavItem href="/about">About</MobileNavItem>
-                <MobileNavItem href="/articles">Articles</MobileNavItem>
-                <MobileNavItem href="/projects">Projects</MobileNavItem>
-                <MobileNavItem href="/speaking">Speaking</MobileNavItem>
-                <MobileNavItem href="/uses">Uses</MobileNavItem>
+                <MobileNavItem href="/">Home</MobileNavItem>
+                <MobileNavItem href="/history">Historique</MobileNavItem>
+                <MobileNavItem href="/tuto">Comment Jouer ?</MobileNavItem>
+                <MobileNavItem href="/about">A Propos</MobileNavItem>
               </ul>
             </nav>
           </Popover.Panel>
@@ -162,10 +161,10 @@ function DesktopNavigation(props) {
   return (
     <nav {...props}>
       <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/about">Home</NavItem>
-        <NavItem href="/articles">History</NavItem>
-        <NavItem className="block" href="/projects">Comment Jouer ?</NavItem>
-        <NavItem href="/speaking">A Propos</NavItem>
+        <NavItem href="/">Home</NavItem>
+        <NavItem href="/history">Historique</NavItem>
+        <NavItem href="/tuto">Comment Jouer ?</NavItem>
+        <NavItem href="/about">A Propos</NavItem>
       </ul>
     </nav>
   )
