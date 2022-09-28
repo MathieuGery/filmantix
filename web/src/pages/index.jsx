@@ -21,7 +21,7 @@ export default function Home() {
             Bienvenue sur Filmantix ! 🎬🍿
           </h1>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-20 mt-10'>
-            <div class="border-2 border-teal-500 rounded-xl px-5 py-5 flex-1 text-center">
+            <div class="border border-teal-500 rounded-xl px-5 py-5 flex-1 text-center">
               <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
                 Les carrés <span className="text-teal-500">100</span>
               </p>
@@ -30,7 +30,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div class="border-2 border-teal-500 rounded-xl px-5 py-5 flex-1 text-center">
+            <div class="border border-teal-500 rounded-xl px-5 py-5 flex-1 text-center">
               <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
                 🗓 Mot Numéro <span className="text-teal-500">100</span>
               </p>
