@@ -10,7 +10,6 @@ import spacy
 
 nlp = spacy.load('fr_core_news_lg')
 plot = get_plot(185) #matrix
-print("ijqiosjfs", plot)
 tokens = nlp(plot)
 wordCount = len(tokens)
 words = deleteCopy(tokens)
