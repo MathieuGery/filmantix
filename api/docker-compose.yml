@@ -1,0 +1,7 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  filmantix-api:
+    image: ghcr.io/mathieugery/filmantix/filmantix-api:latest
+    volumes:
+      - ${PWD}/config/config.yaml:/app/config/config.yaml
+

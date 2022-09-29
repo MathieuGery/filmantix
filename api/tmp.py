@@ -12,7 +12,7 @@ def get_plot(id: int) -> str:
 
     # recommendations = movie.recommendations(movie_id=id)
     print(movie.details(id).overview)
-        
+    return movie.details(id).overview
 
 def deleteCopy(tab: list) -> dict:
     dic = {}
