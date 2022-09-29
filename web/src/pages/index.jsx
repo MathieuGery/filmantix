@@ -1,9 +1,41 @@
 import { Container } from '@/components/Container'
 import Plot from '@/components/Plot'
-import { SimpleLayout } from '@/components/SimpleLayout'
 import Head from 'next/head'
-
+import { useEffect, useState } from 'react'
 export default function Home() {
+  const [plot, setPlot] = useState(null)
+
+  const callAPI = async () => {
+    try {
+      // const res = await fetch(
+      // 	`https://jsonplaceholder.typicode.com/posts/1`
+      // );
+      const res = {
+        "day": "1",
+        "plot": [
+          { "id": 1, "word": "cqsdfqsefqsdfqsefaca" },
+          { "id": 2, "word": "tota" },
+          { "id": 3, "word": "qsdfqsef" },
+          { "id": 4, "word": "test" },
+          { "id": 5, "word": "qsdfqsefp" },
+        ]
+      }
+      const data = await res;
+      setPlot(data)
+      if (localStorage.day != data.day) {
+        localStorage.setItem("plot", JSON.stringify(data))
+        localStorage.setItem("day", data.day)
+        console.log(localStorage.getItem("plot"))
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    callAPI()
+  }, [])
+
   return (
     <>
       <Head>
@@ -56,7 +88,7 @@ export default function Home() {
           />
         </div>
         <div>
-          <Plot className="mt-10"/>
+          <Plot data={plot} className="mt-10" />
         </div>
       </Container>
     </>
