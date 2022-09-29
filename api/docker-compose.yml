@@ -5,3 +5,14 @@ services:
     volumes:
       - ${PWD}/config/config.yaml:/app/config/config.yaml
 
+  filmantix-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dfgdfg
+      APP_DB_USER: filmantix
+      APP_DB_PASS: dfgdfg
+      APP_DB_NAME: filmantix
+    ports:
+      - 5432:5432
