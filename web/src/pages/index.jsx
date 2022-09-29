@@ -1,5 +1,5 @@
 import { Container } from '@/components/Container'
-import { Plot } from '@/components/Plot'
+import Plot from '@/components/Plot'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import Head from 'next/head'
 
