@@ -1,7 +1,9 @@
 from tmdbv3api import TMDb, Movie
+from libs.config import config
 # init(autoreset=True)
+
 tmdb = TMDb()
-tmdb.api_key = ''
+tmdb.api_key = config["TMDB_KEY"]
 tmdb.language = 'fr'
 tmdb.debug = True
 

@@ -1,8 +1,0 @@
----
-############## FLASK ####################
-SERVER_NAME: localhost:8888
-WAITRESS_PORT: 8888
-RESTPLUS_VALIDATE: True
-SWAGGER_UI_DOC_EXPANSION: 'list'
-WAITRESS_HTTP_SCHEME: 'http'
-FLASK_DEBUG: False
