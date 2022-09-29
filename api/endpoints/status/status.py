@@ -4,7 +4,7 @@ from libs.restplus import api_restplus
 ns = api_restplus.namespace(
     'status', description='Status method')
 
-@ns.route('/status')
+@ns.route('/')
 class StatusRessource(Resource):
     # @jwt_required()
     def get(self):
