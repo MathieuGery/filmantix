@@ -9,6 +9,7 @@ ns = api_restplus.namespace(
 class PlotRessource(Resource):
     def get(self):
         db = DatabasePostgres()
-        res = db.list()
+        db.create_plot()
+        res = db.get_all_plots()
         del db
         return {'message': res}, 200
