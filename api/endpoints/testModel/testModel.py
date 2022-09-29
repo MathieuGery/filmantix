@@ -9,7 +9,7 @@ from tmp import get_plot, deleteCopy
 import spacy
 
 nlp = spacy.load('fr_core_news_lg')
-plot = get_plot('0133093') #matrix
+plot = get_plot(185) #matrix
 tokens = nlp(plot)
 wordCount = len(tokens)
 words = deleteCopy(tokens)
