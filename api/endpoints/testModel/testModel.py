@@ -23,9 +23,8 @@ class TestModelResources(Resource):
         word = request.json.get("word")
         compare = model.nlp(word)
 
-        if not compare.has_vector:
-            return {'message': 'no vector'}, 400
-
         return {
-            tokens[words[w][0]].similarity(compare): [ words[w] ] for w in words
+            w : {
+                float(max(tokens[words[w][0]].similarity(compare), w == word)): [ words[w] ] 
+            } for w in words
         }
