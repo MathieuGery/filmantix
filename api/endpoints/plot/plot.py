@@ -7,9 +7,9 @@ ns = api_restplus.namespace(
 
 @ns.route('/')
 class PlotRessource(Resource):
+    # Get Today Plot
     def get(self):
         db = DatabasePostgres()
-        db.create_plot()
-        res = db.get_all_plots()
+        plot = db.get_all_plots()
         del db
-        return {'message': res}, 200
+        return {'plot': plot}, 200

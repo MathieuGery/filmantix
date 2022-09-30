@@ -11,11 +11,18 @@ conn = psycopg2.connect(host=config['POSTGRES_HOST'].get(),
 
 cur = conn.cursor()
 cur.execute('CREATE TABLE plots (id serial PRIMARY KEY,'
-                                'movie varchar (150) NOT NULL,'
-                                'day_num integer NOT NULL,'
-                                'nb_found integer NOT NULL,'
-                                'plot_obsucred jsonb,'
-                                'plot text,'
+                                'title varchar (150) NOT NULL,'
+                                'day_num integer,'
+                                'nb_found integer,'
+                                'plot_obsucred jsonb NOT NULL,'
+                                'plot_non_obsucred jsonb NOT NULL,'
+                                'plot text NOT NULL,'
+                                'link text NOT NULL,'
+                                'poster text NOT NULL,'
+                                'origin_country text NOT NULL,'
+                                'director text NOT NULL,'
+                                'release_date text NOT NULL,'
+                                'runtime integer NOT NULL,'
                                 'date_added date DEFAULT CURRENT_TIMESTAMP);'
                                 )
 conn.commit()

@@ -12,21 +12,39 @@ class DatabasePostgres():
     def __del__(self):
         self.conn.close()
 
-    def create_plot(self):
+    def create_plot(self, data):
         cur = self.conn.cursor()
-        cur.execute('INSERT INTO plots (movie, day_num, nb_found, plot_obsucred, plot)'
-            'VALUES (%s, %s, %s, %s, %s)',
-            ('Movie Name',
-             2,
-             864,
-             '{"Plot obsucred": "plot"}',
-             'plot not obsucred')
+        cur.execute('INSERT INTO plots (title, day_num, nb_found, plot_obsucred, plot_non_obsucred, plot, link, poster, origin_country, director, release_date, runtime)'
+            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+            (data.get("title"),
+             0,
+             0,
+             json.dumps(data.get("plot_obsucred")),
+             json.dumps(data.get("plot_non_obsucred")),
+             data.get("plot"),
+             data.get("link"),
+             data.get("poster"),
+             data.get("origin_country"),
+             data.get("director"),
+             data.get("release_date"),
+             data.get("runtime"))
             )
         self.conn.commit()
         cur.close()
     
     def get_all_plots(self):
         cur = self.conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT id, movie, day_num, nb_found, plot_obsucred, plot, to_char(date_added, 'YYY-MM-DD') FROM plots;")
-        books = cur.fetchall()
-        return books
+        cur.execute("SELECT id, title, day_num, nb_found, plot_obsucred, plot_non_obsucred, plot, link, poster, origin_country, director, release_date, runtime, to_char(date_added, 'YYY-MM-DD') FROM plots;")
+        plots = cur.fetchall()
+        return plots
+
+    def get_last_plot(self):
+        cur = self.conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT id, title, day_num, nb_found, plot_obsucred, plot_non_obsucred, plot, link, poster, origin_country, director, release_date, runtime, to_char(date_added, 'YYY-MM-DD') FROM plots;")
+        plots = cur.fetchall()
+        id = 0
+        for plot in plots:
+            if (plot.get("id") > id):
+                id = plot.get("id")
+                res = plot
+        return res
