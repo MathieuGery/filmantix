@@ -10,6 +10,6 @@ class PlotRessource(Resource):
     # Get Today Plot
     def get(self):
         db = DatabasePostgres()
-        plot = db.get_all_plots()
+        plot = db.get_today_plot()
         del db
         return {'plot': plot}, 200

@@ -48,3 +48,14 @@ class DatabasePostgres():
                 id = plot.get("id")
                 res = plot
         return res
+
+    def get_today_plot(self):
+        cur = self.conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT id, day_num, nb_found, plot_obsucred, to_char(date_added, 'YYY-MM-DD') FROM plots;")
+        plots = cur.fetchall()
+        id = 0
+        for plot in plots:
+            if (plot.get("id") > id):
+                id = plot.get("id")
+                res = plot
+        return res
