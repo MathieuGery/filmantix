@@ -43,6 +43,7 @@ class DatabasePostgres():
         cur.execute("SELECT id, title, day_num, nb_found, plot_obsucred, plot_non_obsucred, plot, link, poster, origin_country, director, release_date, runtime, to_char(date_added, 'YYY-MM-DD') FROM plots;")
         plots = cur.fetchall()
         id = 0
+        res = None
         for plot in plots:
             if (plot.get("id") > id):
                 id = plot.get("id")

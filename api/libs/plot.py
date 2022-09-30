@@ -2,12 +2,21 @@ from database.postgres import DatabasePostgres
 from libs.tmdb import Tmdb
 import re
 
+ponctuation = [',', '.', ':', '\'', '"', '-']
+
 def create_obstructed_plot(plot):
     data = []
-    for index, word in enumerate(plot):
-        for i in range(0, len(word)):
-            w += "\u00A0"
-        data.append({"id": index, "word": w})
+    for word in plot:
+        skip = False
+        for i in ponctuation:
+            if i in word.get('word'):
+                skip = True
+                data.append({"id": word.get('id'), "word": word.get('word')})
+        if not skip: 
+            w = ''
+            for _ in word.get('word'):
+                w += "\u00A0"
+            data.append({"id": word.get('id'), "word": w})
     return data
 
 def create_non_obstructed_plot(plot):
