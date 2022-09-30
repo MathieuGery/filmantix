@@ -2,10 +2,10 @@ import spacy
 from database.postgres import DatabasePostgres
 
 
-db = DatabasePostgres()
 
 class Model:
     def __init__(self):
+        self.db = DatabasePostgres()
         self.nlp = spacy.load('fr_core_news_lg')
         self.update()
         
@@ -19,7 +19,8 @@ class Model:
     def update(self, pPlot = None):
         plot = pPlot if pPlot else self.dbPlot
         self.day = plot.get('to_char')
-        self._tokens = self.nlp(''.join(items['word'] for items in plot.get('plot_non_obsucred')))
+        self._tokens = self.nlp(' '.join(items['word'] for items in plot.get('plot_non_obsucred')))
+        print(len(self._tokens))
         self.deleteCopy()
 
     def deleteCopy(self):
@@ -33,7 +34,7 @@ class Model:
     
     @property
     def dbPlot(self):
-        return db.get_last_plot()
+        return self.db.get_last_plot()
 
 
 # words = {
