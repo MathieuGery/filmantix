@@ -23,8 +23,9 @@ class TestModelResources(Resource):
         word = request.json.get("word")
         compare = model.nlp(word)
 
-        return {
+        return [{
             w : {
                 float(max(tokens[words[w][0]].similarity(compare), w == word)): [ words[w] ] 
-            } for w in words
-        }
+             }
+        } for w in words
+        ]
