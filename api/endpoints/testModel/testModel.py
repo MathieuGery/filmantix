@@ -22,7 +22,7 @@ class TestModelResources(Resource):
     def post(self):
         db = DatabasePostgres()
         plot = db.get_last_plot()
-        tokens = nlp(plot.get("plot"))
+        tokens = nlp(plot.get("plot_non_obsucred"))
         wordCount = len(tokens)
         words = deleteCopy(tokens)
 
