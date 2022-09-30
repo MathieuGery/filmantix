@@ -1,5 +1,6 @@
 from database.postgres import DatabasePostgres
 from libs.tmdb import Tmdb
+import re
 
 def create_obstructed_plot(plot):
     data = []
@@ -12,8 +13,14 @@ def create_obstructed_plot(plot):
 
 def create_non_obstructed_plot(plot):
     data = []
-    for index, word in enumerate(plot.split(" ")):
+    rgx = re.compile("([\s,.;\-\':\(\)]+)")
+    caca = rgx.split(plot)
+    for index, i in enumerate(caca):
+        if (i == " "):
+            del caca[index]
+    for index, word in enumerate(caca):
         data.append({"id": index, "word": word})
+    print(data)
     return data
 
 def create_today_plot():
