@@ -1,8 +1,6 @@
 import spacy
 from database.postgres import DatabasePostgres
 
-
-
 class Model:
     def __init__(self):
         self.db = DatabasePostgres()
@@ -23,6 +21,12 @@ class Model:
             return
         self.day = plot.get('to_char')
         self._tokens = self.nlp(' '.join(items['word'] for items in plot.get('plot_non_obsucred')))
+        
+        for token in self._tokens:
+            print(token)
+
+        print(self._tokens)
+
         self.deleteCopy()
 
     def deleteCopy(self):
