@@ -7,4 +7,5 @@ paste
 confuse
 spacy
 tmdbv3api
-
+psycopg2-binary
+flask-cors
