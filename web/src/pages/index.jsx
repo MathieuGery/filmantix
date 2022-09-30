@@ -4,7 +4,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 export default function Home() {
   const [plot, setPlot] = useState(null)
-  const [word, setWord] = useState(null)
+  const [word, setWord] = useState("")
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -14,24 +14,15 @@ export default function Home() {
 
   const callAPI = async () => {
     try {
-      // const res = await fetch(
-      // 	`https://jsonplaceholder.typicode.com/posts/1`
-      // );
-      const res = {
-        "day": "1",
-        "plot": [
-          { "id": 1, "word": "cqsdfqsefqsdfqsefaca" },
-          { "id": 2, "word": "tota" },
-          { "id": 3, "word": "qsdfqsef" },
-          { "id": 4, "word": "test" },
-          { "id": 5, "word": "qsdfqsefp" },
-        ]
-      }
-      const data = await res;
+      const res = await fetch(
+      	`http://localhost:8888/api/plot`
+      );
+      const data = await res.json();
+      console.log(data)
       setPlot(data)
       if (localStorage.day != data.day) {
         localStorage.setItem("plot", JSON.stringify(data))
-        localStorage.setItem("day", data.day)
+        localStorage.setItem("day", data.plot.day_num)
         console.log(localStorage.getItem("plot"))
       }
     } catch (err) {
@@ -43,6 +34,9 @@ export default function Home() {
     callAPI()
   }, [])
 
+  if (!plot){
+    return(<span className='text-teal-500'>Loading</span>)
+  }
   return (
     <>
       <Head>
@@ -71,11 +65,11 @@ export default function Home() {
 
             <div className="border border-teal-500 rounded-xl px-5 py-5 flex-1 text-left">
               <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                🗓 Mot Numéro <span className="text-teal-500">100</span>
+                🗓 Mot Numéro <span className="text-teal-500">{plot.plot.day_num}</span>
               </p>
               <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mt-2">
                 😎 Trouvé par
-                <span className="text-teal-500"> 900 </span>
+                <span className="text-teal-500"> {plot.plot.nb_found} </span>
                 <span> personnes</span>
               </p>
               <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mt-2">
