@@ -19,7 +19,7 @@ class Model:
     def update(self, pPlot = None):
         plot = pPplot if pPlot else self.dbPlot
         self.day = plot.get('to_char')
-        self._tokens = self.nlp(plot.get('plot_non_obsucred'))
+        self._tokens = self.nlp(''.join(items['word'] for items in plot.get('plot_non_obsucred')))
         self.deleteCopy()
 
     def deleteCopy(self):
