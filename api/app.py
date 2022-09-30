@@ -1,5 +1,6 @@
 from waitress import serve
 import werkzeug
+from flask_cors import CORS
 werkzeug.cached_property = werkzeug.utils.cached_property
 from flask import Flask, Blueprint
 from libs.restplus import api_restplus
@@ -10,6 +11,7 @@ from endpoints.testModel.testModel import ns as testModel
 from endpoints.plot.plot import ns as plot
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_mapping(config.get())
 # JWTManager(app)
 
