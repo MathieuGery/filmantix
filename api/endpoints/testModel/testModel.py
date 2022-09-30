@@ -2,7 +2,7 @@ from flask_restplus import Resource
 from libs.restplus import api_restplus
 from endpoints.testModel.serializers import model_payload
 from flask import request
-from endpoints.testModel.modelClass import Model
+from libs.modelClass import Model
 # from colorama import Fore, init
 # init(autoreset=True)
 
