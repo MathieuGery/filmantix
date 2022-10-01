@@ -6,16 +6,32 @@ export default function Home() {
   const [plot, setPlot] = useState(null)
   const [word, setWord] = useState("")
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     console.log("word", word)
+    try {
+      const res = await fetch(
+        `http://localhost:8888/api/testModel/`,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            "word": word.toLowerCase()
+          }),
+          method: "POST"
+        }
+      );
+      const data = await res.json();
+      console.log(data)
+    } catch (err) {
+      console.log(err);
+    }
     setWord("")
   };
 
   const callAPI = async () => {
     try {
       const res = await fetch(
-      	`http://localhost:8888/api/plot`
+        `http://localhost:8888/api/plot`
       );
       const data = await res.json();
       console.log(data)
@@ -34,8 +50,8 @@ export default function Home() {
     callAPI()
   }, [])
 
-  if (!plot){
-    return(<span className='text-teal-500'>Loading</span>)
+  if (!plot) {
+    return (<span className='text-teal-500'>Loading</span>)
   }
   return (
     <>
