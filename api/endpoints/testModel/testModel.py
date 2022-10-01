@@ -23,9 +23,23 @@ class TestModelResources(Resource):
         word = request.json.get("word")
         compare = model.nlp(word)
 
-        return [{
+        data = [{
             w : {
                 float(max(tokens[words[w][0]].similarity(compare), w == word)): [ words[w] ] 
              }
         } for w in words
         ]
+
+        # A mettre dans une petit methode
+        res = {"score": []}
+        for item in data:
+            key = list(item.keys())[0]
+            value = item.get(key)
+            percent = list(value.keys())[0]
+            for word in model.plot_non_obsucred:
+                if (word.get("word") == key):
+                    if (percent == 1.0):
+                        res.get("score").append({"id": word.get("id"), "value": word.get("word")})
+                    else:
+                        res.get("score").append({"id": word.get("id"), "value": percent,})
+        return res
