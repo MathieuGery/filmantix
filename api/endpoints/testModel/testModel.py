@@ -20,7 +20,7 @@ class TestModelResources(Resource):
     def post(self):
         tokens, words = model.tokens #tokens == nlp tokens; words == dict unique tokens cf bottom modelClass.
 
-        word = request.json.get("word")
+        word = request.json.get("word").lower()
         compare = model.nlp(word)
 
         data = [{
@@ -37,7 +37,7 @@ class TestModelResources(Resource):
             value = item.get(key)
             percent = list(value.keys())[0]
             for word in model.plot_non_obsucred:
-                if (word.get("word") == key):
+                if (word.get("word").lower() == key):
                     if (percent == 1.0):
                         res.get("score").append({"id": word.get("id"), "value": word.get("word")})
                     else:

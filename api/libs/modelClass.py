@@ -22,7 +22,7 @@ class Model:
             return
         self.day = plot.get('to_char')
         self.plot_non_obsucred = plot.get('plot_non_obsucred')
-        self._tokens = self.nlp(' '.join(items['word'] for items in plot.get('plot_non_obsucred')))
+        self._tokens = self.nlp(' '.join(items['word'].lower() for items in plot.get('plot_non_obsucred')))
         self.deleteCopy()
 
     def deleteCopy(self):
