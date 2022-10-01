@@ -28,7 +28,6 @@ def create_non_obstructed_plot(plot):
             del caca[index]
     for index, word in enumerate(caca):
         data.append({"id": index, "word": word})
-    print(data)
     return data
 
 def create_today_plot():
