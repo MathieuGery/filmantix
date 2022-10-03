@@ -31,15 +31,15 @@ class TestModelResources(Resource):
         ]
 
         # A mettre dans une petit methode
-        res = {"score": []}
+        res = {"score": [], "word": word}
         for item in data:
             key = list(item.keys())[0]
             value = item.get(key)
             percent = list(value.keys())[0]
-            for word in model.plot_non_obsucred:
-                if (word.get("word").lower() == key):
+            for w in model.plot_non_obsucred:
+                if (w.get("word").lower() == key):
                     if (percent == 1.0):
-                        res.get("score").append({"id": word.get("id"), "value": word.get("word")})
+                        res.get("score").append({"id": w.get("id"), "value": percent * 100, "word": w.get("word")})
                     else:
-                        res.get("score").append({"id": word.get("id"), "value": percent * 100,})
+                        res.get("score").append({"id": w.get("id"), "value": percent * 100, "word": word})
         return res

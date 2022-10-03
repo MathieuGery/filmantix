@@ -8,7 +8,6 @@ export default function Home() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-    console.log("word", word)
     try {
       const res = await fetch(
         `http://localhost:8888/api/testModel/`,
@@ -21,19 +20,16 @@ export default function Home() {
         }
       );
       const data = await res.json();
-      console.log(data)
       const plot_obscured = JSON.parse(localStorage.getItem("plot"))
       for (const property in data.score) {
-        if (typeof(data.score[property].value) === "string") {
-          console.log("ma bite", data.score[property].value)
-          console.log("test", plot_obscured.plot.plot_obsucred[data.score[property].id].word)
-          plot_obscured.plot.plot_obsucred[data.score[property].id].word = data.score[property].value
+        if (data.score[property].value >= plot_obscured.plot.plot_obsucred[data.score[property].id].score){
+          plot_obscured.plot.plot_obsucred[data.score[property].id].guess = data.score[property].word
+          plot_obscured.plot.plot_obsucred[data.score[property].id].score = data.score[property].value
         }
       }
-    
-    console.log(plot_obscured.plot.plot_obsucred)
     localStorage.setItem("plot", JSON.stringify(plot_obscured))
     setPlot(plot_obscured)
+    console.log(plot_obscured)
     } catch (err) {
       console.log(err);
     }
@@ -46,12 +42,10 @@ export default function Home() {
         `http://localhost:8888/api/plot`
       );
       const data = await res.json();
-      console.log(data)
       setPlot(data)
       if (localStorage.day != data.day) {
         localStorage.setItem("plot", JSON.stringify(data))
         localStorage.setItem("day", data.plot.day_num)
-        console.log(localStorage.getItem("plot"))
       }
     } catch (err) {
       console.log(err);

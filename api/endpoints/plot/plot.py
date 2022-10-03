@@ -13,6 +13,8 @@ class PlotRessource(Resource):
         db = DatabasePostgres()
         plot = db.get_today_plot()
         del db
+        for item in plot.get("plot_obsucred"):
+            item["score"] = 0
         return {'plot': plot}, 200
 
 @ns.route('/create')
