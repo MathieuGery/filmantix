@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 export default function Home() {
   const [plot, setPlot] = useState(null)
+  const [guessWord, setGuessWord] = useState("")
   const [word, setWord] = useState("")
 
   const handleOnSubmit = async (e) => {
@@ -20,6 +21,7 @@ export default function Home() {
         }
       );
       const data = await res.json();
+      setGuessWord(word.toLowerCase())
       const plot_obscured = JSON.parse(localStorage.getItem("plot"))
       for (const property in data.score) {
         if (data.score[property].value >= plot_obscured.plot.plot_obsucred[data.score[property].id].score){
@@ -115,7 +117,7 @@ export default function Home() {
           </form>
         </div>
         <div>
-          <Plot data={plot} className="mt-10" />
+          <Plot data={plot} guessWord={guessWord} className="mt-10" />
         </div>
       </Container>
     </>
