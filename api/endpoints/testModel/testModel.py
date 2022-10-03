@@ -41,5 +41,5 @@ class TestModelResources(Resource):
                     if (percent == 1.0):
                         res.get("score").append({"id": word.get("id"), "value": word.get("word")})
                     else:
-                        res.get("score").append({"id": word.get("id"), "value": percent,})
+                        res.get("score").append({"id": word.get("id"), "value": percent * 100,})
         return res
