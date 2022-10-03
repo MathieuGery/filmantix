@@ -6,6 +6,7 @@ class Model:
         self.db = DatabasePostgres()
         self.day = None
         self.plot_non_obsucred = None
+        self.title_non_obsucred = None
         self.nlp = spacy.load('fr_core_news_lg')
         self.update()
         
@@ -22,6 +23,7 @@ class Model:
             return
         self.day = plot.get('to_char')
         self.plot_non_obsucred = plot.get('plot_non_obsucred')
+        self.title_non_obsucred = plot.get('title_non_obsucred')
         self._tokens = self.nlp(' '.join(items['word'].lower() for items in plot.get('plot_non_obsucred')))
         self.deleteCopy()
 

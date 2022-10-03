@@ -31,7 +31,7 @@ class TestModelResources(Resource):
         ]
 
         # A mettre dans une petit methode
-        res = {"score": [], "word": word}
+        res = {"score": [], "word": word, "title": []}
         for item in data:
             key = list(item.keys())[0]
             value = item.get(key)
@@ -42,4 +42,10 @@ class TestModelResources(Resource):
                         res.get("score").append({"id": w.get("id"), "value": percent * 100, "word": w.get("word")})
                     else:
                         res.get("score").append({"id": w.get("id"), "value": percent * 100, "word": word})
+        ## Check title
+        for w in model.title_non_obsucred:
+            if (word == w.get("word").lower()):
+                res.get("title").append({"id": w.get("id"), "value": 100, "word": w.get("word")})
+            else:
+                res.get("title").append({"id": w.get("id"), "value": 0, "word": ""})
         return res

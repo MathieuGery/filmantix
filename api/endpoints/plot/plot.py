@@ -15,6 +15,8 @@ class PlotRessource(Resource):
         del db
         for item in plot.get("plot_obsucred"):
             item["score"] = 0
+        for item in plot.get("title_obsucred"):
+            item["score"] = 0
         return {'plot': plot}, 200
 
 @ns.route('/create')

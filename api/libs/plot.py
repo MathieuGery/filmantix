@@ -36,6 +36,7 @@ def create_today_plot():
     plot = tmdb_instance.get_plot(1416)
     plot["plot_non_obsucred"] = create_non_obstructed_plot(plot.get("plot"))
     plot["plot_obsucred"] = create_obstructed_plot(plot["plot_non_obsucred"])
+    plot["title_non_obsucred"] = create_non_obstructed_plot(plot.get("title"))
+    plot["title_obsucred"] = create_obstructed_plot(plot["title_non_obsucred"])
     db.create_plot(plot)
     del db
-    return

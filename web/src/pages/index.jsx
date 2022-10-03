@@ -29,9 +29,15 @@ export default function Home() {
           plot_obscured.plot.plot_obsucred[data.score[property].id].score = data.score[property].value
         }
       }
+      for (const property in data.title) {
+        if (data.title[property].value >= plot_obscured.plot.title_obsucred[data.title[property].id].score){
+        plot_obscured.plot.title_obsucred[data.title[property].id].guess = data.title[property].word
+        plot_obscured.plot.title_obsucred[data.title[property].id].score = data.title[property].value
+        }
+      }
+    console.log("plot", plot_obscured)
     localStorage.setItem("plot", JSON.stringify(plot_obscured))
     setPlot(plot_obscured)
-    console.log(plot_obscured)
     } catch (err) {
       console.log(err);
     }
@@ -48,6 +54,7 @@ export default function Home() {
       if (localStorage.day != data.day) {
         localStorage.setItem("plot", JSON.stringify(data))
         localStorage.setItem("day", data.plot.day_num)
+        localStorage.setItem("guess_history", JSON.stringify({"guesses": []}))
       }
     } catch (err) {
       console.log(err);
