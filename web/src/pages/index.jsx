@@ -1,5 +1,6 @@
 import { Container } from '@/components/Container'
 import Plot from '@/components/Plot'
+import Movie from '@/components/Movie'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
@@ -10,13 +11,12 @@ function HandleError(props) {
   }
 }
 
-
-
 export default function Home() {
   const [plot, setPlot] = useState(null)
   const [guessWord, setGuessWord] = useState("")
   const [word, setWord] = useState("")
   const [error, setError] = useState(null)
+  const [movie, setMovie] = useState(null)
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function Home() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             "word": word.toLowerCase(),
-            "title" : plot_obscured.plot.title_obsucred
+            "title": plot_obscured.plot.title_obsucred
           }),
           method: "POST"
         }
@@ -50,7 +50,10 @@ export default function Home() {
           plot_obscured.plot.title_obsucred[data.title[property].id].score = data.title[property].value
         }
       }
-      console.log("plot", plot_obscured)
+      if (data.movie) {
+        setMovie(data.movie)
+        plot_obscured.movie = data.movie
+      }
       localStorage.setItem("plot", JSON.stringify(plot_obscured))
       localStorage.setItem("guess_history", JSON.stringify(guess_history))
       setPlot(plot_obscured)
@@ -65,17 +68,21 @@ export default function Home() {
     try {
       const res = await fetch(
         `http://localhost:8888/api/plot`
-      );
-      const data = await res.json();
-      const data_from_lc = localStorage.getItem("plot")
-      setPlot(data)
-      if (localStorage.day != data.plot.day_num) {
-        console.log("New day, new plot good luck!")
-        localStorage.setItem("plot", JSON.stringify(data))
-        localStorage.setItem("day", data.plot.day_num)
-        localStorage.setItem("guess_history", JSON.stringify({ "guesses": [] }))
-      } else {
+        );
+        const data = await res.json();
+        setPlot(data)
+        if (localStorage.day != data.plot.day_num) {
+          console.log("New day, new plot good luck!")
+          localStorage.setItem("plot", JSON.stringify(data))
+          localStorage.setItem("day", data.plot.day_num)
+          localStorage.setItem("guess_history", JSON.stringify({ "guesses": [] }))
+        } else {
+        const data_from_lc = JSON.parse(localStorage.getItem("plot"))
         setPlot(JSON.parse(localStorage.getItem("plot")))
+        if (data_from_lc.movie){
+          console.log("You have already win for today!")
+          setMovie(data_from_lc.movie)
+        }
       }
     } catch (err) {
       console.log(err);
@@ -131,6 +138,9 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {movie != null &&
+         <Movie data={movie} className="animate-bounce [animation-iteration-count:1.5]"/>
+        }
         <div className="mt-10 mx-2">
           <form onSubmit={handleOnSubmit}>
             <input
@@ -142,7 +152,7 @@ export default function Home() {
               onChange={event => setWord(event.target.value)}
               className="min-w-0 placeholder:p-1 flex-auto appearance-none rounded-md border ring-zinc-800 dark:ring-white border-zinc-900/10 bg-white ring-2 px-2 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-l"
             />
-          <HandleError error={error}/>
+            <HandleError error={error} />
           </form>
         </div>
         <div>

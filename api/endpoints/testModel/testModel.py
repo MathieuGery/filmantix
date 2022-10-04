@@ -67,5 +67,6 @@ class TestModelResources(Resource):
                 count += 1
         if (count == len(model.title_non_obsucred)):
             res["victory"] = True
+            res["movie"] = model.plot
             return res
         return res

@@ -4,6 +4,7 @@ from database.postgres import DatabasePostgres
 class Model:
     def __init__(self):
         self.db = DatabasePostgres()
+        self.plot = None
         self.day = None
         self.plot_non_obsucred = None
         self.title_non_obsucred = None
@@ -21,6 +22,7 @@ class Model:
         plot = pPlot if pPlot else self.dbPlot
         if not plot:
             return
+        self.plot = plot
         self.day = plot.get('to_char')
         self.plot_non_obsucred = plot.get('plot_non_obsucred')
         self.title_non_obsucred = plot.get('title_non_obsucred')

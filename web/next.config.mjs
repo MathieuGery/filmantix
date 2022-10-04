@@ -11,6 +11,9 @@ const nextConfig = {
     newNextLinkBehavior: true,
     scrollRestoration: true,
   },
+  images: {
+    domains: ['www.themoviedb.org', 'image.tmdb.org'],
+  }
 }
 
 const withMDX = nextMDX({
