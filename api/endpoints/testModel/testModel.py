@@ -21,6 +21,7 @@ class TestModelResources(Resource):
         tokens, words = model.tokens #tokens == nlp tokens; words == dict unique tokens cf bottom modelClass.
 
         word = request.json.get("word").lower()
+        title = request.json.get("title")
         compare = model.nlp(word)
 
         data = [{
@@ -38,7 +39,6 @@ class TestModelResources(Resource):
             key = list(item.keys())[0]
             value = item.get(key)
             percent = list(value.keys())[0]
-            print(percent)
             if(percent == 0):
                 check += 1
         if (len(data) == check):
@@ -54,9 +54,18 @@ class TestModelResources(Resource):
                     else:
                         res.get("score").append({"id": w.get("id"), "value": percent * 100, "word": word})
         ## Check title
-        for w in model.title_non_obsucred:
+        for index, w in enumerate(model.title_non_obsucred):
             if (word == w.get("word").lower()):
                 res.get("title").append({"id": w.get("id"), "value": 100, "word": w.get("word")})
             else:
-                res.get("title").append({"id": w.get("id"), "value": 0, "word": ""})
+                res.get("title").append({"id": w.get("id"), "value": title[index].get("value"), "word": title[index].get("guess")})
+        
+        ##check victory
+        count = 0
+        for index, w in enumerate(model.title_non_obsucred):
+            if (res.get("title")[index].get("word") == w.get("word")):
+                count += 1
+        if (count == len(model.title_non_obsucred)):
+            res["victory"] = True
+            return res
         return res

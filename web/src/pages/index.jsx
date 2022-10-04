@@ -21,12 +21,14 @@ export default function Home() {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
+      const plot_obscured = JSON.parse(localStorage.getItem("plot"))
       const res = await fetch(
         `http://localhost:8888/api/testModel/`,
         {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            "word": word.toLowerCase()
+            "word": word.toLowerCase(),
+            "title" : plot_obscured.plot.title_obsucred
           }),
           method: "POST"
         }
@@ -34,7 +36,6 @@ export default function Home() {
       const data = await res.json();
       setError(null)
       setGuessWord(word.toLowerCase())
-      const plot_obscured = JSON.parse(localStorage.getItem("plot"))
       const guess_history = JSON.parse(localStorage.getItem("guess_history"))
       guess_history.guesses.push(word)
       for (const property in data.score) {
