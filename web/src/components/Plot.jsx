@@ -12,7 +12,7 @@ function Plot({ data, guessWord, className }) {
     <div className={clsx(className, "flex-row flex flex-wrap border border-zinc-300 rounded-xl p-5")}>
       <div className="mb-4 flex-row flex flex-wrap">
         {data.plot.title_obsucred.map((word, item) => {
-          if ([",", "-", ":", "'", ".", "!", "?", ";"].some(item => word.word.includes(item))) {
+          if ([",", "-", ":", "'", ".", "!", "?", ";", "’", "'"].some(item => word.word.includes(item))) {
             return <span key={item} id={word.id} className="select-none text-white mt-2 rounded">{word.word}</span>
           }
           if (word.score == 100) {
@@ -27,7 +27,7 @@ function Plot({ data, guessWord, className }) {
       </div>
       <div className="flex-row flex flex-wrap">
         {data.plot.plot_obsucred.map((word, item) => {
-          if ([",", "-", ":", "'", ".", "!", "?", ";"].some(item => word.word.includes(item))) {
+          if ([",", "-", ":", "'", ".", "!", "?", ";", "’", "'"].some(item => word.word.includes(item))) {
             return <span key={item} id={word.id} className="select-none text-white mt-2 rounded">{word.word}</span>
           }
           if (word.score == 100) {

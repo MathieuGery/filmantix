@@ -63,7 +63,7 @@ class TestModelResources(Resource):
         ##check victory
         count = 0
         for index, w in enumerate(model.title_non_obsucred):
-            if (res.get("title")[index].get("word") == w.get("word")):
+            if (res.get("title")[index].get("word") == w.get("word") or "\xa0" in w.get("word")):
                 count += 1
         if (count == len(model.title_non_obsucred)):
             res["victory"] = True
