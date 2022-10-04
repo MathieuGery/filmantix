@@ -29,7 +29,7 @@ function Movie({ data, className }) {
                 Directeur: <span className="text-teal-500">{data.director}</span>
               </p>
               <p className="text-l font-bold tracking-tight text-white sm:ml-14">
-                Durée: <span className="text-teal-500">{data.runtime}</span>
+                Durée: <span className="text-teal-500">{data.runtime}</span><span className="text-xs">m</span>
               </p>
               <p className="text-l font-bold tracking-tight text-white sm:ml-14">
                 Sortie: <span className="text-teal-500">{data.release_date}</span>
