@@ -23,21 +23,24 @@ export default function Home() {
       const data = await res.json();
       setGuessWord(word.toLowerCase())
       const plot_obscured = JSON.parse(localStorage.getItem("plot"))
+      const guess_history = JSON.parse(localStorage.getItem("guess_history"))
+      guess_history.guesses.push(word)
       for (const property in data.score) {
-        if (data.score[property].value >= plot_obscured.plot.plot_obsucred[data.score[property].id].score){
+        if (data.score[property].value >= plot_obscured.plot.plot_obsucred[data.score[property].id].score) {
           plot_obscured.plot.plot_obsucred[data.score[property].id].guess = data.score[property].word
           plot_obscured.plot.plot_obsucred[data.score[property].id].score = data.score[property].value
         }
       }
       for (const property in data.title) {
-        if (data.title[property].value >= plot_obscured.plot.title_obsucred[data.title[property].id].score){
-        plot_obscured.plot.title_obsucred[data.title[property].id].guess = data.title[property].word
-        plot_obscured.plot.title_obsucred[data.title[property].id].score = data.title[property].value
+        if (data.title[property].value >= plot_obscured.plot.title_obsucred[data.title[property].id].score) {
+          plot_obscured.plot.title_obsucred[data.title[property].id].guess = data.title[property].word
+          plot_obscured.plot.title_obsucred[data.title[property].id].score = data.title[property].value
         }
       }
-    console.log("plot", plot_obscured)
-    localStorage.setItem("plot", JSON.stringify(plot_obscured))
-    setPlot(plot_obscured)
+      console.log("plot", plot_obscured)
+      localStorage.setItem("plot", JSON.stringify(plot_obscured))
+      localStorage.setItem("guess_history", JSON.stringify(guess_history))
+      setPlot(plot_obscured)
     } catch (err) {
       console.log(err);
     }
@@ -50,11 +53,15 @@ export default function Home() {
         `http://localhost:8888/api/plot`
       );
       const data = await res.json();
+      const data_from_lc = localStorage.getItem("plot")
       setPlot(data)
-      if (localStorage.day != data.day) {
+      if (localStorage.day != data.plot.day_num) {
+        console.log("New day, new plot good luck!")
         localStorage.setItem("plot", JSON.stringify(data))
         localStorage.setItem("day", data.plot.day_num)
-        localStorage.setItem("guess_history", JSON.stringify({"guesses": []}))
+        localStorage.setItem("guess_history", JSON.stringify({ "guesses": [] }))
+      } else {
+        setPlot(JSON.parse(localStorage.getItem("plot")))
       }
     } catch (err) {
       console.log(err);
@@ -96,7 +103,7 @@ export default function Home() {
 
             <div className="border border-teal-500 rounded-xl px-5 py-5 flex-1 text-left">
               <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                🗓 Mot Numéro <span className="text-teal-500">{plot.plot.day_num}</span>
+                🗓 Mot Numéro <span className="text-teal-500">{localStorage.day}</span>
               </p>
               <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mt-2">
                 😎 Trouvé par
