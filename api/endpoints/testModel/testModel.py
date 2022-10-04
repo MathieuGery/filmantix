@@ -32,6 +32,17 @@ class TestModelResources(Resource):
 
         # A mettre dans une petit methode
         res = {"score": [], "word": word, "title": []}
+        # Check if the word exist
+        check = 0
+        for item in data:
+            key = list(item.keys())[0]
+            value = item.get(key)
+            percent = list(value.keys())[0]
+            print(percent)
+            if(percent == 0):
+                check += 1
+        if (len(data) == check):
+            return {"score": "Incorect word"}, 404
         for item in data:
             key = list(item.keys())[0]
             value = item.get(key)
