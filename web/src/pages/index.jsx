@@ -3,6 +3,7 @@ import Plot from '@/components/Plot'
 import Movie from '@/components/Movie'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import { History } from '@/components/History'
 
 
 function HandleError(props) {
@@ -17,6 +18,7 @@ export default function Home() {
   const [word, setWord] = useState("")
   const [error, setError] = useState(null)
   const [movie, setMovie] = useState(null)
+  const [history, setHistory] = useState({ "guesses": [] })
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +58,7 @@ export default function Home() {
       }
       localStorage.setItem("plot", JSON.stringify(plot_obscured))
       localStorage.setItem("guess_history", JSON.stringify(guess_history))
+      setHistory(guess_history)
       setPlot(plot_obscured)
     } catch (err) {
       console.log(err);
@@ -71,20 +74,24 @@ export default function Home() {
         {
           headers: { 'Content-Type': 'application/json' }
         }
-        );
-        const data = await res.json();
-        setPlot(data)
-        if (localStorage.day != data.plot.day_num) {
-          console.log("New day, new plot good luck!")
-          localStorage.setItem("plot", JSON.stringify(data))
-          localStorage.setItem("day", data.plot.day_num)
-          localStorage.setItem("guess_history", JSON.stringify({ "guesses": [] }))
-        } else {
+      );
+      const data = await res.json();
+      setPlot(data)
+      if (localStorage.getItem("guess_history")) {
+        setHistory(JSON.parse(localStorage.getItem("guess_history")))
+      }
+      if (localStorage.day != data.plot.day_num) {
+        console.log("New day, new plot good luck!")
+        localStorage.setItem("plot", JSON.stringify(data))
+        localStorage.setItem("day", data.plot.day_num)
+        localStorage.setItem("guess_history", JSON.stringify({ "guesses": [] }))
+      } else {
         const data_from_lc = JSON.parse(localStorage.getItem("plot"))
         setPlot(JSON.parse(localStorage.getItem("plot")))
-        if (data_from_lc.movie){
+        if (data_from_lc.movie) {
           console.log("You have already win for today!")
           setMovie(data_from_lc.movie)
+          setHistory(JSON.parse(localStorage.getItem("guess_history")))
         }
       }
     } catch (err) {
@@ -116,13 +123,9 @@ export default function Home() {
             Bienvenue sur Filmantix ! 🎬🍿
           </h1>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-20 mt-10'>
-            <div className="order-last sm:order-first border border-teal-500 rounded-xl px-5 py-5 flex-1 text-center">
-              <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                Les carrés <span className="text-teal-500">100</span>
-              </p>
-              <p className="text-l font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mt-2">
-                Liste des mots
-              </p>
+            <div className="order-last sm:order-first border border-teal-500 rounded-xl px-5 py-5 flex-1">
+              <h1 className='text-xl font-bold text-white'>Historique</h1>
+              {history.guesses.length != 0 && <History history={history} />}
             </div>
 
             <div className="border border-teal-500 rounded-xl px-5 py-5 flex-1 text-left">
@@ -142,7 +145,7 @@ export default function Home() {
           </div>
         </div>
         {movie != null &&
-         <Movie data={movie} className="animate-bounce [animation-iteration-count:1.5]"/>
+          <Movie data={movie} className="animate-bounce [animation-iteration-count:1.5]" />
         }
         <div className="mt-10 mx-2">
           <form onSubmit={handleOnSubmit}>
