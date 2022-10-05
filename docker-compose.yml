@@ -2,10 +2,26 @@ version: "3.9"  # optional since v1.27.0
 services:
   filmantix-api:
     image: ghcr.io/mathieugery/filmantix/filmantix-api:latest
+    container_name: filmantix-api
+    restart: always
     volumes:
       - ${PWD}/api/config/config.yaml:/app/config/config.yaml
     ports:
       - 8888:8888
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.filmantix-api-http.entrypoints=http"
+      - "traefik.http.routers.filmantix-api-http.rule=Host(`filmantix-api.gery.me`)"
+      - "traefik.http.routers.filmantix-api-http.middlewares=filmantix-api-https@docker"
+      - "traefik.http.middlewares.filmantix-api-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.filmantix-api.rule=Host(`filmantix-api.gery.me`)"
+      - "traefik.http.routers.filmantix-api.entrypoints=https"
+      - "traefik.http.routers.filmantix-api.tls.certresolver=gery"
+      - "traefik.http.services.filmantix-api.loadbalancer.server.port=443"
+    depends_on:
+      - db
+    networks:
+      - web
 
   db:
     image: postgres
@@ -19,9 +35,6 @@ services:
     ports:
       - 5432:5432
 
-  filmantix-local:
-    build: ./api
-    volumes:
-      - ${PWD}/config/config.yaml:/app/config/config.yaml
-    ports:
-      - 8888:8888
+networks:
+  web:
+    external: true
