@@ -12,7 +12,7 @@ const nextConfig = {
     scrollRestoration: true,
   },
   images: {
-    domains: ['www.themoviedb.org', 'image.tmdb.org'],
+    domains: ['filmantix-api.gery.me', 'www.themoviedb.org', 'image.tmdb.org'],
   }
 }
 
