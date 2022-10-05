@@ -22,6 +22,11 @@ export default function Home() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
+    if (word.includes(" ")) {
+      setError("que un seul mot")
+      setWord("")
+      return
+    }
     try {
       const plot_obscured = JSON.parse(localStorage.getItem("plot"))
       const res = await fetch(
