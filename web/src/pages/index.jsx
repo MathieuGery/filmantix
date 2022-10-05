@@ -23,7 +23,7 @@ export default function Home() {
     try {
       const plot_obscured = JSON.parse(localStorage.getItem("plot"))
       const res = await fetch(
-        `http://localhost:8888/api/testModel/`,
+        `https://filmantix-api.gery.me/api/testModel/`,
         {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -67,7 +67,7 @@ export default function Home() {
   const callAPI = async () => {
     try {
       const res = await fetch(
-        `http://localhost:8888/api/plot`
+        `https://filmantix-api.gery.me/api/plot`
         );
         const data = await res.json();
         setPlot(data)
