@@ -38,8 +38,8 @@ function Movie({ data, className }) {
               </p>
             </div>
           </div>
-              <Link href={data.link} className="text-center text-l font-bold hover:bg-teal-700 bg-teal-500 rounded-xl shadow-xl py-2 text-white mt-2">
-                {data.title}
+              <Link href={data.link} className="text-center text-l font-bold hover:bg-teal-700 bg-teal-500 rounded-xl shadow-xl text-white p-4 mt-4">
+                Plus d'infos
               </Link>
         </div>
       </div >
