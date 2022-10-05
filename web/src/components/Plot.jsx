@@ -32,13 +32,13 @@ function Plot({ data, guessWord, className }) {
           }
           if (word.score == 100) {
             return <span key={item} id={word.id} className="animate-bounce [animation-iteration-count:1.5] select-none text-white mt-2 ml-1 text-l">{word.guess}</span>
-          } else if (word.score >= 28 && word.score <= 35) {
+          } else if (word.score >= 36 && word.score <= 43) {
             return <span key={item} id={word.id} className="select-none text-white bg-orange-400 mx-1 mt-2 rounded px-2">{word.guess}</span>
-          } else if (word.score >= 60) {
+          } else if (word.score >= 68) {
             return <span key={item} id={word.id} className="select-none text-white bg-red-700 mx-1 mt-2 rounded px-2">{word.guess}</span>
-          } else if (word.score > 45 && word.score < 60) {
+          } else if (word.score > 53 && word.score < 68) {
             return <span key={item} id={word.id} className="select-none text-white bg-orange-600 mx-1 mt-2 rounded px-2">{word.guess}</span>
-          } else if (word.score > 35 && word.score < 45) {
+          } else if (word.score > 43 && word.score < 53) {
             return <span key={item} id={word.id} className="select-none text-white bg-orange-500 mx-1 mt-2 rounded px-2">{word.guess}</span>
           } else {
             return <span key={item} id={word.id} className="select-none text-teal-500 bg-teal-500 mx-1 mt-2 rounded px-2">{word.word}</span>
