@@ -67,7 +67,10 @@ export default function Home() {
   const callAPI = async () => {
     try {
       const res = await fetch(
-        `https://filmantix-api.gery.me/api/plot`
+        `https://filmantix-api.gery.me/api/plot/`,
+        {
+          headers: { 'Content-Type': 'application/json' }
+        }
         );
         const data = await res.json();
         setPlot(data)
