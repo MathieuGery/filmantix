@@ -9,6 +9,7 @@ class Model:
         self.plot_non_obsucred = None
         self.title_non_obsucred = None
         self.nlp = spacy.load('fr_core_news_lg')
+        self.nlp.get_pipe("lemmatizer")
         self.update()
         
     @property
@@ -41,9 +42,3 @@ class Model:
     @property
     def dbPlot(self):
         return self.db.get_last_plot()
-
-
-# words = {
-    # key: value
-    # word: [indices]
-# }
